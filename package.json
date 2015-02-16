@@ -1,0 +1,31 @@
+{
+  "name": "react-flux-routing-seo",
+  "version": "0.0.1",
+  "description": "React/Flux/React-Router SEO goodness",
+  "main": "server.js",
+  "scripts": {
+    "start": "npm run build && node server.js",
+    "start-dev": "npm run watch & npm start",
+    "build": "browserify -t reactify app.js > static/bundle.js",
+    "watch": "watchify -t reactify app.js lib/**/*.* -o static/bundle.js -dv"
+  },
+  "author": "Brian Schemp",
+  "dependencies": {
+    "ecstatic": "^0.5.8",
+    "ejs": "^2.2.2",
+    "es6-promise": "^2.0.1",
+    "flux": "^2.0.1",
+    "node-jsx": "^0.12.4",
+    "object-assign": "^2.0.0",
+    "react": "^0.12.2",
+    "react-router": "^0.11.6",
+    "routes": "^2.0.0",
+    "serialize-javascript": "^1.0.0",
+    "superagent": "^0.21.0"
+  },
+  "devDependencies": {
+    "browserify": "^8.1.1",
+    "reactify": "^1.0.0",
+    "watchify": "^2.3.0"
+  }
+}
