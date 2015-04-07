@@ -1,13 +1,14 @@
 'use strict';
 
 var React = require('react');
-var Navigation = require('react-router').Navigation;
 
-var Category = React.createClass({
-  mixins: [Navigation],
+var CategoryList = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   handleChange: function (e) {
-    this.transitionTo('/products/' + e.target.value);
+    this.context.router.transitionTo('products', { category: e.target.value });
   },
 
   propTypes: {
@@ -16,11 +17,10 @@ var Category = React.createClass({
 
   getDefaultProps: function () {
     return {
-      cagtegories: null
+      cagtegories: []
     };
   },
 
-  /* jshint ignore:start */
   render: function () {
     var categories;
 
@@ -38,12 +38,11 @@ var Category = React.createClass({
           <option value="">Select a Category</option>
           { categories }
         </select>
-      </div>  
+      </div>
     );
 
   }
-  /* jshint ignore:end */
 
 });
 
-module.exports = Category;
+module.exports = CategoryList;

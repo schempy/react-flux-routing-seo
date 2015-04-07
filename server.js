@@ -13,7 +13,7 @@ var categories = require('./data/categories');
 var ejsTemplate = fs.readFileSync(__dirname + '/views/index.ejs', 'utf8');
 
 // Routes
-router.addRoute('/', function (req, res, params) {
+router.addRoute('/', function (req, res) {
   var stateOutput = {};
 
   // Set the categories.
@@ -24,7 +24,7 @@ router.addRoute('/', function (req, res, params) {
     res.write(ejs.render(ejsTemplate, {
       appOutput: html,
       stateOutput: 'window.App=' + serialize(stateOutput) + ';'
-    }));  
+    }));
 
     res.end();
   });
@@ -43,10 +43,10 @@ router.addRoute('/products/:product', function (req, res, params) {
     res.write(ejs.render(ejsTemplate, {
       appOutput: html,
       stateOutput: 'window.App=' + serialize(stateOutput) + ';'
-    }));  
+    }));
 
     res.end();
-  });  
+  });
 });
 
 // Route for API.
@@ -58,11 +58,13 @@ router.addRoute('/api/products/:category', function (req, res, params) {
 
 var server = http.createServer(function (req, res) {
   var m = router.match(req.url);
-  if (m) m.fn(req, res, m.params);
-  else ecstatic(req, res);
+  if (m) {
+    m.fn(req, res, m.params);
+  } else {
+    ecstatic(req, res);
+  }
 });
 
 server.listen(5000, function () {
   console.log('listening on :' + server.address().port);
 });
-

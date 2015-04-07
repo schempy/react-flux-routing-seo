@@ -1,0 +1,19 @@
+{
+    "ecmaFeatures": {
+        "blockBindings": true,
+        "forOf": true,
+        "jsx": true
+    },
+    "env": {
+      "browser": 1,
+      "node": 1
+    },
+    "globals": {
+      "module": 1,
+      "require": 1
+    },
+    "rules": {
+        "quotes": [2, "single"],
+        "strict": [2, "global"]
+    }
+}

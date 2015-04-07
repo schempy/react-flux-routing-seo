@@ -13,7 +13,6 @@ var ProductList = React.createClass({
     };
   },
 
-  /* jshint ignore:start */
   render: function() {
     return (
       <div>
@@ -29,7 +28,6 @@ var ProductList = React.createClass({
       </div>
     );
   }
-  /* jshint ignore:end */
 
 });
 

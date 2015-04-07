@@ -3,54 +3,30 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var CategoryList = require('../components/CategoryList.jsx');
 
 var AppHandler = React.createClass({
 
-  getInitialState: function() {
-    return {
-      mode: 'Server Rendering',
-      counter: 0
-    };
-  },
-
   propTypes: {
-    categories: React.PropTypes.array,
-    products: React.PropTypes.array
+    params: React.PropTypes.object.isRequired,
+    state: React.PropTypes.object.isRequired
   },
 
   getDefaultProps: function() {
     return {
-      categories: [],
-      products: []
+      params: {},
+      state: {}
     };
   },
 
-  componentDidMount: function() {
-    this.setState({
-      mode: 'Client Rendering'
-    });
-
-    window.setInterval(this.incrementCounter, 1000);
-  },
-
-  incrementCounter: function() {
-    this.setState({counter: this.state.counter+1});
-  },
-
-  /* jshint ignore:start */
   render: function() {
     return (
       <div>
-        <header>
-          Current mode: {this.state.mode} <br />
-          {(this.state.counter > 0) ? this.state.counter + ' seconds' : ''}
-        </header>
-
-        <RouteHandler categories={ this.props.categories } products= { this.props.products } />
+        <CategoryList categories={ this.props.state.categories }/>
+        <RouteHandler products={ this.props.state.products } params={ this.props.params }/>
       </div>
     );
   }
-  /* jshint ignore:end */
 
 });
 

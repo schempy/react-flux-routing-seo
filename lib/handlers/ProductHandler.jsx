@@ -2,11 +2,20 @@
 
 var React = require('react');
 var ProductList = require('../components/ProductList.jsx');
-var SearchStore = require('../stores/SearchStore');
+var ProductStore = require('../stores/ProductStore');
+var ActionCreators = require('../actions/ActionCreators');
 
 var ProductHandler = React.createClass({
   propTypes: {
-    products: React.PropTypes.array
+    products: React.PropTypes.array,
+    params: React.PropTypes.object.isRequired
+  },
+
+  getDefaultProps: function () {
+    return {
+      products: [],
+      params: []
+    };
   },
 
   getInitialState: function () {
@@ -15,17 +24,36 @@ var ProductHandler = React.createClass({
     };
   },
 
-  componentWillMount: function () {
-    SearchStore.addChangeListener(this._onChange);
+  componentDidMount: function () {
+    if (this.props.products.length === 0) {
+      this.categoryDidChange(this.props.params.category);
+    }
   },
 
-  _onChange: function () {
+  componentWillMount: function () {
+    ProductStore.addChangeListener(this.onChange);
+  },
+
+  componentWillUnmount: function() {
+    ProductStore.removeChangeListener(this.onChange);
+  },
+
+  onChange: function () {
     this.setState({
-      products: SearchStore.getProducts()
+      products: ProductStore.getProducts()
     });
   },
 
-  /* jshint ignore:start */
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.params.category !== this.props.params.category) {
+      this.categoryDidChange(nextProps.params.category);
+    }
+  },
+
+  categoryDidChange: function(category) {
+    ActionCreators.requestProducts(category);
+  },
+
   render: function() {
     return (
       <div>
@@ -34,7 +62,6 @@ var ProductHandler = React.createClass({
       </div>
     );
   }
-  /* jshint ignore:end */
 
 });
 
